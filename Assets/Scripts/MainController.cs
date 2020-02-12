@@ -1,23 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Factory;
+using ServiceLocator;
 using UnityEngine;
 
 public class MainController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnClick()
     {
         Debug.Log(":-)");
+        
+        var loader = ServiceLocator.ServiceLocator.Create<Scene.Loader>(); //ScriptableObject.CreateInstance<Scene.Loader>();
+        //if (slider != null)
+        //{
+        //    loader.OnProgress = progress => slider.value = progress;
+        //}
+        loader.OnLoaded = (scene) => Debug.Log("OnLoaded");
+        loader.OnComplete = (scene) => Debug.Log("OnComplete");
+        loader.Load("Scenes/Game");
     }
 }

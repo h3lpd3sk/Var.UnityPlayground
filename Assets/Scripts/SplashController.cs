@@ -1,35 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityScene = UnityEngine.SceneManagement.Scene;
+using UnityEngine.Events;
 
 public class SplashController : MonoBehaviour
 {
     [SerializeField]
-    private Slider slider;
-    
-    IEnumerator Start()
+    private Slider slider = default;
+
+    void Start()
     {
-        var operation = SceneManager.LoadSceneAsync("Scenes/Main");
-        operation.allowSceneActivation = false;
-        while (operation.progress < 0.9f)
+        var loader =  ServiceLocator.ServiceLocator.Create<Scene.Loader>();
+        if (slider != null)
         {
-            //yield return new WaitForSeconds(5f);
-            slider.value = operation.progress;
-            yield return null;
+            loader.OnProgress = progress => slider.value = progress;
         }
-
-        operation.allowSceneActivation = true;
-
-        //onLoaded?.Invoke(SceneManager.GetSceneByName(sceneName));
-
-        yield return new WaitWhile(() => !operation.isDone);
-        yield return new WaitForEndOfFrame();
-
-        //onActived?.Invoke(SceneManager.GetSceneByName(sceneName));
-        //Object.Destroy(this);
-        //yield break;
+        loader.OnLoaded = (scene) => Debug.Log("OnLoaded");
+        loader.OnComplete = (scene) => Debug.Log("OnComplete");
+        loader.Load("Scenes/Main");
     }
 }
