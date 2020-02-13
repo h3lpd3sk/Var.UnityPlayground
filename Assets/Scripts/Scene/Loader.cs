@@ -12,11 +12,9 @@ namespace Scene
         public UnityAction<UnityScene> OnLoaded;
         public UnityAction<UnityScene> OnComplete;
 
-        private class Container: MonoBehaviour { }
-
         public void Load(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
         {
-            var behaviour = StaticGameObject.gameObject.AddComponent<Container>();
+            var behaviour = StaticGameObject.behaviour;
             behaviour.StartCoroutine(LoadRoutine(sceneName, mode));
         }
 
