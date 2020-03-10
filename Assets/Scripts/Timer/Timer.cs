@@ -20,19 +20,20 @@ namespace Timer
         {
             format = formatting;
             expires = dateTime;
+            OnTick?.Invoke((expires - DateTime.UtcNow).ToString(format));
             Manager.OnTick += Tick;
         }
 
         public void Tick()
         {
             var now = DateTime.UtcNow;
+            OnTick?.Invoke((expires - DateTime.UtcNow).ToString(format));
+            
             if (expires <= now)
             {
                 Manager.OnTick -= Tick;
                 OnComplete?.Invoke();
             }
-
-            OnTick?.Invoke((expires - DateTime.UtcNow).ToString(format));
         }
 
         // Start
