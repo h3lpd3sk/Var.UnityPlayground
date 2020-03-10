@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Factory;
-using ServiceLocator;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MainController : MonoBehaviour
-{   
+public class GameController : MonoBehaviour
+{
     [SerializeField]
     private UnityEngine.Object scene;
     
     public void OnClick()
     {
-        Debug.Log(":-)");
-        
         var loader = ScriptableObject.CreateInstance<Scene.Loader>();
         //if (slider != null)
         //{

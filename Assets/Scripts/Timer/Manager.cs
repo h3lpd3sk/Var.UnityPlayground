@@ -7,7 +7,7 @@ namespace Timer
 {
     public static class Manager
     {
-        public static UnityAction OnTick;
+        public static event UnityAction OnTick;
         private static bool IsRunning = true;
 
         static Manager()
@@ -20,7 +20,7 @@ namespace Timer
         {
             for (;IsRunning;)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.25f);
                 OnTick?.Invoke();
             }
         }

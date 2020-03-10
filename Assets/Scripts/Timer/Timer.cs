@@ -8,8 +8,8 @@ namespace Timer
     public class Timer
     {
         private const string DefaultFormat = "mm\\:ss\\:ff";
-        public UnityAction<string> OnTick;
-        public UnityAction OnComplete;
+        public event UnityAction<string> OnTick;
+        public event UnityAction OnComplete;
         private DateTime expires;
         private string format;
 
@@ -28,7 +28,7 @@ namespace Timer
             var now = DateTime.UtcNow;
             if (expires <= now)
             {
-                Manager.OnTick -= Tick; // @fixme
+                Manager.OnTick -= Tick;
                 OnComplete?.Invoke();
             }
 

@@ -18,16 +18,14 @@ namespace Timer {
         
         private void Awake()
         {
-            timer = new Timer(new TimeSpan(0,1, 30))
+            timer = new Timer(new TimeSpan(0, 1, 30));
+            timer.OnTick += (remaining) =>
             {
-                OnTick = (remaining) =>
-                {
-                    if (text == null)
-                        return;
-                    text.text = remaining;
-                },
-                OnComplete = () => Debug.Log("Done...")
+                if (text == null)
+                    return;
+                text.text = remaining;
             };
+            timer.OnComplete += () => Debug.Log("Done...");
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Scene
 {
     class Loader : ScriptableObject
     {
-        public UnityAction<float> OnProgress;
-        public UnityAction<UnityScene> OnLoaded;
-        public UnityAction<UnityScene> OnComplete;
+        public event UnityAction<float> OnProgress;
+        public event UnityAction<UnityScene> OnLoaded;
+        public event UnityAction<UnityScene> OnComplete;
 
         public void Load(string sceneName, LoadSceneMode mode = LoadSceneMode.Single)
         {
@@ -25,6 +25,7 @@ namespace Scene
             while (operation.progress < 0.9f)
             {
                 OnProgress?.Invoke(operation.progress);
+                //yield return new WaitForSeconds(0.5f);
                 yield return null;
             }
             operation.allowSceneActivation = true;
